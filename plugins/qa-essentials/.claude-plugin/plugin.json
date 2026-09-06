@@ -1,0 +1,11 @@
+{
+  "name": "qa-essentials",
+  "description": "Core testing craft skills: forensic bug reports, risk-based test plans, and session-based exploratory charters.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Recep Türker"
+  },
+  "homepage": "https://github.com/RECEP-GITHUB-KULLANICI-ADI/qa-skills",
+  "license": "MIT",
+  "keywords": ["qa", "testing", "sdet", "quality-engineering"]
+}

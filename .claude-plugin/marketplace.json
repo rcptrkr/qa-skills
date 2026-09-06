@@ -1,0 +1,30 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "qa-skills",
+  "owner": {
+    "name": "Recep Türker",
+    "url": "https://github.com/RECEP-GITHUB-KULLANICI-ADI"
+  },
+  "description": "Agent Skills for software testers — the craft of QA, not just test generation.",
+  "version": "0.1.0",
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "qa-essentials",
+      "source": "./plugins/qa-essentials",
+      "displayName": "QA Essentials",
+      "description": "Core testing craft: forensic bug reports, risk-based test plans, and session-based exploratory charters. Framework-agnostic, with JUnit/TestNG and NUnit/xUnit examples.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Recep Türker"
+      },
+      "repository": "https://github.com/RECEP-GITHUB-KULLANICI-ADI/qa-skills",
+      "license": "MIT",
+      "category": "testing",
+      "keywords": ["qa", "testing", "test-automation", "sdet", "bug-report", "risk-based-testing", "exploratory-testing"],
+      "tags": ["qa", "testing", "junit", "nunit", "quality-engineering"]
+    }
+  ]
+}
