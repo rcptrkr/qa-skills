@@ -173,3 +173,7 @@ Produce the plan as Markdown. Then state, in three lines:
 
 Companion file: `RISK_MODEL.md` — scoring bands, a worked example, and the
 regression-scope heuristics.
+
+See also: `exploratory-charter` to turn each high-risk area into a session with a
+stated mission, and `bug-report-forensics` for what those sessions produce. Neither
+is required to use this skill.

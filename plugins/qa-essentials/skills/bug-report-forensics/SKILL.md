@@ -186,3 +186,7 @@ Produce the finished report as copy-pasteable Markdown. Then, separately and bri
 
 Companion files: `SEVERITY.md` (rubric and decision table), `EXAMPLES.md`
 (three before/after rewrites).
+
+See also: `exploratory-charter`, where most reports worth writing originate, and
+`risk-based-test-plan` when a defect suggests an area was under-tested rather than
+unlucky. Neither is required to use this skill.

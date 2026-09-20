@@ -151,3 +151,7 @@ Produce:
    a decision rather than an oversight.
 
 Companion file: `HEURISTICS.md` — oracles, data attacks, state models, tours.
+
+See also: `risk-based-test-plan` for choosing which areas deserve a charter at all,
+and `bug-report-forensics` for turning a session finding into something a developer
+can act on. Neither is required to use this skill.
