@@ -38,22 +38,43 @@ These skills encode that judgement.
 
 ## Install
 
-```bash
+### Claude Code (CLI)
+
+```
 /plugin marketplace add rcptrkr/qa-skills
 /plugin install qa-essentials@qa-skills
 ```
 
-Or clone and add locally:
+To work from a local clone instead:
 
-```bash
+```
 git clone https://github.com/rcptrkr/qa-skills.git
 ```
 
-```bash
+```
 /plugin marketplace add ./qa-skills
 ```
 
-Works with Claude Code and any agent that reads the `SKILL.md` format.
+### Claude desktop app
+
+The app manages plugins through its own Plugins panel rather than the slash
+command. Open it and add `rcptrkr/qa-skills` as a marketplace, then install
+**qa-essentials** from it.
+
+### Any agent that reads SKILL.md
+
+The skills are plain Markdown with YAML frontmatter and depend on nothing else,
+so you can drop them in directly:
+
+```
+git clone https://github.com/rcptrkr/qa-skills.git
+mkdir -p ~/.claude/skills
+cp -R qa-skills/plugins/qa-essentials/skills/* ~/.claude/skills/
+```
+
+They then load as `/bug-report-forensics`, `/risk-based-test-plan` and
+`/exploratory-charter`. The same folders work with Cursor, Codex, Gemini CLI and
+anything else that reads the Agent Skills format — adjust the destination path.
 
 ---
 
