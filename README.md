@@ -121,6 +121,26 @@ Session-based exploratory testing that produces evidence, not anecdotes.
 
 ---
 
+## These skills are measured
+
+Every skill here was run against a no-skill control on six realistic prompts and graded
+by an independent agent on 63 assertions drawn from the skills' own promises:
+**98.3% with the skill, 63.8% without**, winning all six cases.
+
+More usefully, the measurement found three defects in the skills — including one where
+`bug-report-forensics` was *suppressing* something the control produced, because the
+report template had no field for how a fix would be verified. All three are fixed.
+
+It also showed that only 35% of the assertions discriminate at all, which narrows the
+honest claim: these skills do not supply good judgement, they stop good judgement from
+being left soft.
+
+Method, full results, the defects found and the limits of the measurement are in
+[`evals/RESULTS.md`](evals/RESULTS.md). Prompts and assertions are in
+[`evals/evals.json`](evals/evals.json).
+
+---
+
 ## Design principles
 
 1. **Judgement over generation.** Anything that just wraps a prompt around

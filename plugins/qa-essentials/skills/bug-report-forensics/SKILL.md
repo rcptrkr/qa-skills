@@ -158,7 +158,26 @@ Regression
 Workaround
   For support and for the users waiting on the fix. "None found" is a valid and
   useful answer — it tells the triager something.
+
+Fix verification
+  The specific check, on the specific condition, that must pass for this to count as
+  fixed — and the regression test that should exist afterwards so it cannot come back
+  unnoticed. Without this the person closing the ticket decides what "fixed" meant,
+  and they will decide it more cheaply than you would.
 ```
+
+### Let the length track what you actually know
+
+A report should be as long as what has been established, not as long as you can make
+it. When the reproduction is unverified and most fields are still assumptions, the
+honest report is short: the observation, what you have already ruled out, and the
+questions that unblock it. Filling an unverified report with ranked hypotheses and
+speculative preconditions makes it look investigated when it is not — and a two
+hundred line ticket for a defect nobody has reproduced gets skimmed and closed.
+
+The same goes for the notes after the report. They are notes; a handful of lines. If
+they outgrow the report, either the content belongs in the report or the investigation
+deserves its own ticket.
 
 ## Anti-patterns to reject
 

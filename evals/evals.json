@@ -1,0 +1,123 @@
+{
+  "plugin": "qa-essentials",
+  "note": "Output-quality evals. Each prompt is phrased the way a real tester would ask, never naming the skill. Two prompts are in Turkish to check the skills hold up on non-English input, since the examples inside them are English.",
+  "evals": [
+    {
+      "id": 0,
+      "skill": "bug-report-forensics",
+      "name": "vague-support-complaint",
+      "prompt": "Support forwarded this: \"Some users say they still get emails after turning notifications off.\" That is literally all I have. I need to open a ticket the backend team can act on. Our stack is Spring Boot, the notification service is separate from the user service, and we are on release 3.4.2.",
+      "expected_output": "A structured report that names the oracle, asks specific minimization questions rather than 'need more info', separates severity from priority with justification, and lists stack-appropriate evidence to collect.",
+      "assertions": [
+        "Names the oracle being violated (requirement, contract, standard, product consistency, user expectation) instead of simply asserting that something is a bug",
+        "Recommends checking for an existing duplicate ticket before filing",
+        "Separates Severity and Priority into two distinct fields rather than one combined rating",
+        "Justifies the severity rating with at least one sentence tied to concrete damage",
+        "Frames priority as a recommendation for the product owner, not as the tester's decision",
+        "Lists what could not be determined as specific answerable questions, not a generic 'more information needed'",
+        "Drives toward a narrowest-condition statement, or states exactly what is needed to produce one",
+        "Requests Spring-specific evidence such as the full Caused by: chain, a correlation/trace id, or the matching log window",
+        "Treats the two-service split (notification vs user service) as a reason to locate which side owns the defect"
+      ]
+    },
+    {
+      "id": 1,
+      "skill": "bug-report-forensics",
+      "name": "dotnet-exception-dump",
+      "prompt": "Prod is throwing this and the PM keeps saying ASAP but the dev says he cannot reproduce it. Turn it into a proper bug report.\n\nSystem.InvalidOperationException: Sequence contains no elements\n   at System.Linq.Enumerable.First[TSource](IEnumerable`1 source)\n   at Billing.InvoiceCalculator.ApplyTaxRate(Invoice inv) in /src/Billing/InvoiceCalculator.cs:line 212\n   at Billing.InvoiceService.Finalize(Guid invoiceId) in /src/Billing/InvoiceService.cs:line 88\n\nHappens maybe a few times a day. We run 4 instances behind a load balancer.",
+      "expected_output": "Report that treats the trace as evidence not as the report, drives toward a narrowest condition, flags the intermittency as its own finding, and asks for .NET-specific evidence (InnerException, TraceId).",
+      "assertions": [
+        "Names the oracle being violated (requirement, contract, standard, product consistency, user expectation) instead of simply asserting that something is a bug",
+        "Recommends checking for an existing duplicate ticket before filing",
+        "Separates Severity and Priority into two distinct fields rather than one combined rating",
+        "Justifies the severity rating with at least one sentence tied to concrete damage",
+        "Frames priority as a recommendation for the product owner, not as the tester's decision",
+        "Lists what could not be determined as specific answerable questions, not a generic 'more information needed'",
+        "Drives toward a narrowest-condition statement, or states exactly what is needed to produce one",
+        "Treats the stack trace as evidence rather than presenting it as the report itself",
+        "Flags the intermittency ('a few times a day' across 4 load-balanced instances) as a finding in its own right",
+        "Does not lower the severity rating on the grounds that the failure is intermittent",
+        "Requests .NET-specific evidence such as the InnerException chain or an Activity/TraceId"
+      ]
+    },
+    {
+      "id": 2,
+      "skill": "risk-based-test-plan",
+      "name": "feature-tight-deadline",
+      "prompt": "We just added profile photo upload. Images go to S3, there is a thumbnail job that runs async, and the old avatar gets deleted after the new one is confirmed. Release is Tuesday and I have two days. What should I test?",
+      "expected_output": "A risk register with likelihood x impact scored from observable signals, depth chosen per area, a populated out-of-scope table with real mitigations, and non-functional dimensions explicitly walked.",
+      "assertions": [
+        "Contains a risk register listing areas with separate likelihood and impact scores",
+        "Ties at least three of the scores to named observable signals (churn, defect history, concurrency, time/locale/money, thin tests) rather than unexplained numbers",
+        "Contains an explicit out-of-scope section naming what will NOT be tested",
+        "Every out-of-scope entry carries a mitigation, or states plainly that the risk is being accepted",
+        "Assigns a different test depth per area instead of applying uniform coverage everywhere",
+        "Walks non-functional dimensions explicitly, marking each as relevant or not applicable with a reason",
+        "Exit criteria are something more meaningful than 'all tests pass'",
+        "Respects the stated time box in how the effort is allocated",
+        "Identifies the async thumbnail job and the delete-after-confirm ordering as distinct risk areas",
+        "Considers partial failure: what happens if the new upload succeeds but confirmation or deletion does not"
+      ]
+    },
+    {
+      "id": 3,
+      "skill": "risk-based-test-plan",
+      "name": "legacy-migration-turkish",
+      "prompt": "15 yıllık fatura hesaplama modülünü Java 8'den Java 17'ye taşıdık. Kod kimsenin dokunmak istemediği cinsten, orijinal yazarlar şirkette değil, mevcut testler çoğunlukla happy path. Bir haftam var. Neyi test etmeliyim, neyi test etmemeliyim?",
+      "expected_output": "Same structural quality as eval 2, produced from a Turkish prompt. Should specifically weight the thin-test-coverage and departed-author signals, and the out-of-scope section should be substantive given the breadth.",
+      "assertions": [
+        "Contains a risk register listing areas with separate likelihood and impact scores",
+        "Ties at least three of the scores to named observable signals (churn, defect history, concurrency, time/locale/money, thin tests) rather than unexplained numbers",
+        "Contains an explicit out-of-scope section naming what will NOT be tested",
+        "Every out-of-scope entry carries a mitigation, or states plainly that the risk is being accepted",
+        "Assigns a different test depth per area instead of applying uniform coverage everywhere",
+        "Walks non-functional dimensions explicitly, marking each as relevant or not applicable with a reason",
+        "Exit criteria are something more meaningful than 'all tests pass'",
+        "Respects the stated time box in how the effort is allocated",
+        "Written in Turkish, matching the language the user used",
+        "Weights the thin existing test coverage and the departed original authors as likelihood signals",
+        "Treats money correctness (invoice calculation) as a top impact signal",
+        "Addresses behavioural differences introduced by the Java 8 to 17 move rather than treating it as a no-op"
+      ]
+    },
+    {
+      "id": 4,
+      "skill": "exploratory-charter",
+      "name": "new-screen-no-spec",
+      "prompt": "A new analytics dashboard screen landed in staging. There is no spec, the PO just said \"have a look before Thursday\". It shows revenue by region with date filters and a CSV export. I have about three hours.",
+      "expected_output": "5-8 ranked charters in the Explore/with/to-discover form where the third clause is a question, named heuristics, a session sheet, and a line naming which quality criteria are not covered.",
+      "assertions": [
+        "Produces between 5 and 8 charters",
+        "Every charter follows the Explore / with / to discover structure",
+        "Every charter's third clause states a question or information goal, never 'to find bugs'",
+        "Charters are ranked, with a stated rationale for the ordering",
+        "Names at least one heuristic framework explicitly (SFDIPOT, HICCUPPS, quality criteria, or tours)",
+        "Includes a session sheet template whose task breakdown percentages sum to 100",
+        "States which quality criteria the charter set does not cover",
+        "Charters are time-boxed",
+        "At least one charter targets the CSV export as a distinct surface from the on-screen data",
+        "Fits the stated three-hour budget rather than proposing more sessions than there is time for"
+      ]
+    },
+    {
+      "id": 5,
+      "skill": "exploratory-charter",
+      "name": "undocumented-api-turkish",
+      "prompt": "Partner entegrasyonu için yeni bir REST API aldık. Dokümantasyon yarım kalmış, sadece endpoint listesi var, alan açıklamaları yok. Bunu test etmem gerekiyor ama nereden başlayacağımı bilmiyorum.",
+      "expected_output": "Same structural quality as eval 4, from a Turkish prompt, with charters adapted to an API surface rather than a UI.",
+      "assertions": [
+        "Produces between 5 and 8 charters",
+        "Every charter follows the Explore / with / to discover structure",
+        "Every charter's third clause states a question or information goal, never 'to find bugs'",
+        "Charters are ranked, with a stated rationale for the ordering",
+        "Names at least one heuristic framework explicitly (SFDIPOT, HICCUPPS, quality criteria, or tours)",
+        "Includes a session sheet template whose task breakdown percentages sum to 100",
+        "States which quality criteria the charter set does not cover",
+        "Charters are time-boxed",
+        "Written in Turkish, matching the language the user used",
+        "Charters target an API surface (payloads, status codes, contracts, error shapes) rather than UI interactions",
+        "Addresses the missing field documentation as a testability problem, not only a testing problem"
+      ]
+    }
+  ]
+}

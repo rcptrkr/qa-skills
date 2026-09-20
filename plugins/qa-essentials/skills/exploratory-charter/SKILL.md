@@ -32,6 +32,22 @@ Bad:
 - Explore the checkout page to find bugs. *(no question, no resources, unbounded)*
 - Test the new report screen. *(not a charter — a task)*
 
+"Bugs" is the obvious failure. The common one is subtler: naming a *category* of
+defect and mistaking it for information. Test the clause this way — if you can append
+"defects", "bugs" or "issues" to it and it still reads naturally, you named a category.
+
+- *...to discover **presentation and localisation defects*** → a category. What do you
+  actually want to learn? *...to discover whether currency and thousands separators
+  survive a tr-TR locale, and where long region names break the legend.*
+- *...to discover **security issues*** → a category. *...to discover whether a user
+  scoped to one region can read another region's revenue by editing the filter
+  parameter.*
+
+This matters most when the session ends without finding anything. "No presentation
+defects found" is unfalsifiable and tells the team nothing; "separators are correct in
+tr-TR, but region names over 24 characters clip the legend" is a finding either way.
+That is the whole reason the third clause has to be a question.
+
 ## Producing a charter set
 
 Given an area, generate **5–8 charters**, each 60–90 minutes, ranked by risk.
