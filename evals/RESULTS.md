@@ -71,6 +71,46 @@ a question. Re-run: category clauses went from 1 to 0 across both charter cases,
 the Turkish case showed the principle transferring to a different domain rather than
 the example being copied.
 
+## Trigger accuracy
+
+Output quality only matters if the skill is reached for in the first place. That is a
+separate measurement, and it needed its own harness.
+
+14 queries, two runs each, phrased the way a tester would actually write them and never
+naming a skill. Four should route to `bug-report-forensics`, four to
+`risk-based-test-plan`, three to `exploratory-charter`, and three should trigger nothing
+at all. Three of the queries are in Turkish. Because all three skills live in the same
+domain and share vocabulary, the interesting failure is not silence — it is one skill
+answering another's question.
+
+**28/28.** Every positive query reached the correct skill on both runs, Turkish
+included, with no cross-triggering. All three negatives — "write a junit 5 test for this
+method", "this NullPointerException is coming from OrderMapper line 84, fix it", "write
+the postmortem doc for yesterday's outage" — left every skill dormant.
+
+### The tooling was the least reliable thing measured
+
+The standard description-optimization loop first reported 0% recall, then 11–17% after a
+partial fix. Both figures were wrong, and finding out why took longer than the
+measurement itself. Two faults:
+
+1. **It tested a command, not a skill.** The harness writes the candidate description to
+   `.claude/commands/`. Commands are user-invoked; the model does not reach for them on
+   its own. Placing a command and a skill with identical descriptions side by side, the
+   model called the skill and ignored the command every time.
+2. **It did not isolate from the installed copy.** With `qa-essentials` installed, every
+   run had the real skill competing with the harness's temporary duplicate. The model
+   picked the real one — and the harness, which only counts its own uuid-suffixed copy,
+   recorded that as "not triggered". The thing under test was breaking its own test.
+
+Even with both faults fixed, the harness's synthetic skill — a uuid-suffixed name and a
+one-line body — triggered on 1 of 3 runs where the real installed skill triggered on 4
+of 4. So its absolute numbers stay untrustworthy, and the figures above come from
+running the real skills and recording which one the model actually called.
+
+The loop's own conclusion was to change nothing, which was the right non-action on a
+broken signal.
+
 ## Limits of this measurement
 
 - **One run per cell.** The ± figures in `benchmark.json` are spread across cases, not
@@ -78,6 +118,11 @@ the example being copied.
 - **Two thirds of the assertions measure nothing.** They are kept for now because a
   non-discriminating assertion still guards against regression, but they inflate the
   headline pass rate and should be sharpened.
-- **Trigger accuracy is untested.** These evals hand the skill to the model directly.
-  Whether the model reaches for the skill unprompted — which decides whether any of
-  this matters in practice — is a separate measurement.
+- **The trigger queries were written by the same person who wrote the descriptions.**
+  That is the weakest point in the trigger result. Queries written by someone who has
+  not read the skills would be a fairer test, and 28/28 should be read with that in mind.
+- **14 queries, two runs, one model.** Enough to show the skills route correctly and stay
+  quiet on near-misses; not enough to put a confidence interval on it.
+- **Quality and triggering were measured separately.** Nothing here measures the two
+  together — whether a skill that fires on a real, messy, half-stated request still
+  produces the output these evals graded.

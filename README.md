@@ -135,6 +135,12 @@ It also showed that only 35% of the assertions discriminate at all, which narrow
 honest claim: these skills do not supply good judgement, they stop good judgement from
 being left soft.
 
+Triggering was measured too, since output quality is worthless if the skill is never
+reached for: **28/28** — every query routed to the right one of the three skills,
+Turkish included, with no cross-triggering and no false positives on near-misses. The
+standard optimization tooling reported 0%, then 11–17%; both were artifacts of two bugs
+in the harness, written up below.
+
 Method, full results, the defects found and the limits of the measurement are in
 [`evals/RESULTS.md`](evals/RESULTS.md). Prompts and assertions are in
 [`evals/evals.json`](evals/evals.json).
