@@ -39,14 +39,14 @@ These skills encode that judgement.
 ## Install
 
 ```bash
-/plugin marketplace add RECEP-GITHUB-KULLANICI-ADI/qa-skills
+/plugin marketplace add rcptrkr/qa-skills
 /plugin install qa-essentials@qa-skills
 ```
 
 Or clone and add locally:
 
 ```bash
-git clone https://github.com/RECEP-GITHUB-KULLANICI-ADI/qa-skills.git
+git clone https://github.com/rcptrkr/qa-skills.git
 ```
 
 ```bash

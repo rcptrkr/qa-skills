@@ -3,7 +3,7 @@
   "name": "qa-skills",
   "owner": {
     "name": "Recep Türker",
-    "url": "https://github.com/RECEP-GITHUB-KULLANICI-ADI"
+    "url": "https://github.com/rcptrkr"
   },
   "description": "Agent Skills for software testers — the craft of QA, not just test generation.",
   "version": "0.1.0",
@@ -20,7 +20,7 @@
       "author": {
         "name": "Recep Türker"
       },
-      "repository": "https://github.com/RECEP-GITHUB-KULLANICI-ADI/qa-skills",
+      "repository": "https://github.com/rcptrkr/qa-skills",
       "license": "MIT",
       "category": "testing",
       "keywords": ["qa", "testing", "test-automation", "sdet", "bug-report", "risk-based-testing", "exploratory-testing"],
